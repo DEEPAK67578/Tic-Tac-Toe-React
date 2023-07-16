@@ -39,7 +39,7 @@ function Gameboard(props) {
        } else if(winnerId === 2) {
           winnerName = props.playerData[1].name
           gameIsFinished = true
-          props.winnerGame(winnerName)
+          props.winnerGame(winnerName,textContent)
        } else if(winnerId === -1) {
          textContent = "It's a Draw"
          gameIsFinished = true
