@@ -6,6 +6,9 @@ import { useState } from "react";
 const Gameheader = (props) => {
   const [activePlayer, setActivePlayer] = useState(0);
   const [displayForGame, setDispayForGame] = useState("none");
+  const [displayWinner,setDisplayWinner] = useState('none')
+  const [winner,setWinner] = useState('')
+  const [turnDisplay,setTurnDisplay] = useState('block')
 
   const startGame = () => {
     if (props.data[0].name.length > 0 && props.data[1].name.length > 0) {
@@ -14,6 +17,20 @@ const Gameheader = (props) => {
       alert("Please set a Custom Name");
     }
   };
+
+  function winnerName(name,text) {
+    if(name.length != 0) {
+      setTurnDisplay('none')
+      setWinner(name)
+      setDisplayWinner('block')
+    }
+
+    if(text.length !=0) {
+      setTurnDisplay('none')
+      setDisplayWinner('block')
+    }
+        
+  }
 
   const switchPlayer = () => {
     if(activePlayer == 0) {
@@ -32,23 +49,20 @@ const Gameheader = (props) => {
             textAlign: "center",
             backgroundColor: "blueviolet",
             margin: " 20px auto",
-            display: "none",
+            display: displayWinner,
           }}
         >
           <h1 style={{ color: "white" }}>
-            You won
-            <span style={{ color: "rgb(70,0,99)" }}>
-              {props.data[activePlayer].name}
-            </span>
+           {winner.length != 0 ? "You won " + winner : "It's a Draw"}
           </h1>
         </div>
         <div>
-          <p>
+          <p style={{display:turnDisplay,color:'white'}}>
             It's Your Turn,
             <span style={{ color: "blueviolet" }}>{props.data[activePlayer].name}</span>
           </p>
         </div>
-        <Gameboard switchPlayer={switchPlayer} playerData = {props.data} activePlayer={activePlayer}></Gameboard>
+        <Gameboard winnerGame={winnerName} switchPlayer={switchPlayer} playerData = {props.data} activePlayer={activePlayer}></Gameboard>
       </div>
     </div>
   );
